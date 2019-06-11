@@ -6,27 +6,38 @@ import { ones, twos, threes, fours, fives, sixes, threeOfKind, fourOfKind, fullH
 
 
 class ScoreTable extends Component {
-  getTotalScore () {
-    const { scores } = this.props;
-    let totalScore = 0;
-    for (let key in scores){
-      if (scores[key]) totalScore += scores[key];
-    }
-    return totalScore;
-  }
-
   getTopScore() {
     const { scores } = this.props; 
+    let scoresArr = Object.values(scores);
     let topScore = 0;
     for (let i = 0; i < 6; i++) {
-      if (scores[i])  topScore += scores[i];
+      if (scoresArr[i])  topScore += scoresArr[i];
     }
     return topScore;
   }
 
+  getBonus() {
+    let topAndBonus = 0;
+    return topAndBonus = (this.getTopScore() > 63 ) ? this.getTopScore() + 35 : this.getTopScore();
+  }
+
+  getBottomScore() {
+    const { scores } = this.props; 
+    let scoresArr = Object.values(scores);
+    let bottomScore = 0;
+    for (let i = 6; i <= 12; i++) {
+      if (scoresArr[i])  bottomScore += scoresArr[i];
+    }
+    return bottomScore;
+  }
 
   render() {
     const { scores, doScore } = this.props;
+    const topScore = this.getTopScore();
+    const topAndBonus = this.getBonus();
+    const bottomScore = this.getBottomScore();
+    const totalScore = topAndBonus + bottomScore;
+
 
     return (
       <div className="ScoreTable">
@@ -40,9 +51,9 @@ class ScoreTable extends Component {
               <RuleRow description={fours.description} name="Vierer" score={scores.fours} doScore={evt => doScore("fours", fours.evalRoll)} />
               <RuleRow description={fives.description} name="F&uuml;nfer" score={scores.fives} doScore={evt => doScore("fives", fives.evalRoll)} />
               <RuleRow description={sixes.description} name="Sechser" score={scores.sixes} doScore={evt => doScore("sixes", sixes.evalRoll)} />
-              <RuleRow name={`Zwischensumme: ${this.getTopScore()}`}></RuleRow>
+              <RuleRow name={`Zwischensumme: ${topScore}`}></RuleRow>
               <RuleRow name={`Bonus bei 63 oder mehr: +35 Punkte`}></RuleRow>
-              <RuleRow name={`Summe Teil 1: ${(this.getTopScore() > 63 ) ? this.getTopScore() + 35 : this.getTopScore()}`}></RuleRow>
+              <RuleRow name={`Summe Teil 1: ${topAndBonus}`}></RuleRow>
             </tbody>
           </table>
         </section>
@@ -57,10 +68,11 @@ class ScoreTable extends Component {
               <RuleRow description={largeStraight.description} name="Gro&szlig;e Stra&szlig;e" score={scores.largeStraight} doScore={evt => doScore("largeStraight", largeStraight.evalRoll)} />
               <RuleRow description={yahtzee.description} name="Kniffel" score={scores.yahtzee} doScore={evt => doScore("yahtzee", yahtzee.evalRoll)} />
               <RuleRow description={chance.description} name="Chance" score={scores.chance} doScore={evt => doScore("chance", chance.evalRoll)} />
+              <RuleRow name={`Summe Teil 2: ${bottomScore}`}></RuleRow>
             </tbody>
           </table>
         </section>
-        <h2>ENDSUMME: {this.getTotalScore()}</h2>
+        <h2>ENDSUMME: {totalScore}</h2>
       </div>
     )
   }
