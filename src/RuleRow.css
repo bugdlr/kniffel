@@ -18,6 +18,8 @@
   animation: Slide 1s ease 1;
 }
 
+
+
 @keyframes Slide {
   0% {
     background-position: 100% 50%;
@@ -47,4 +49,9 @@
 .RuleRow-score {
   width: 50%;
   text-align: right;
+}
+
+.total {
+  background: rgba(227, 242, 253, 0.5);
+  text-transform: none;
 }

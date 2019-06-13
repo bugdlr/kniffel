@@ -17,8 +17,7 @@ class ScoreTable extends Component {
   }
 
   getBonus() {
-    let topAndBonus = 0;
-    return topAndBonus = (this.getTopScore() > 63 ) ? this.getTopScore() + 35 : this.getTopScore();
+    return (this.getTopScore() > 63 ) ? this.getTopScore() + 35 : this.getTopScore();
   }
 
   getBottomScore() {
@@ -38,7 +37,6 @@ class ScoreTable extends Component {
     const bottomScore = this.getBottomScore();
     const totalScore = topAndBonus + bottomScore;
 
-
     return (
       <div className="ScoreTable">
         <section className="ScoreTable-section">
@@ -51,9 +49,9 @@ class ScoreTable extends Component {
               <RuleRow description={fours.description} name="Vierer" score={scores.fours} doScore={evt => doScore("fours", fours.evalRoll)} />
               <RuleRow description={fives.description} name="F&uuml;nfer" score={scores.fives} doScore={evt => doScore("fives", fives.evalRoll)} />
               <RuleRow description={sixes.description} name="Sechser" score={scores.sixes} doScore={evt => doScore("sixes", sixes.evalRoll)} />
-              <RuleRow name={`Zwischensumme: ${topScore}`}></RuleRow>
-              <RuleRow name={`Bonus bei 63 oder mehr: +35 Punkte`}></RuleRow>
-              <RuleRow name={`Summe Teil 1: ${topAndBonus}`}></RuleRow>
+              <RuleRow description="total" name={`Zwischensumme:`} score={topScore}></RuleRow>
+              <RuleRow description="total" name={`Bonus bei 63 oder mehr:`} score="+35 Punkte"></RuleRow>
+              <RuleRow description="total" name={`Summe Teil 1:`} score={topAndBonus}></RuleRow>
             </tbody>
           </table>
         </section>
@@ -68,7 +66,7 @@ class ScoreTable extends Component {
               <RuleRow description={largeStraight.description} name="Gro&szlig;e Stra&szlig;e" score={scores.largeStraight} doScore={evt => doScore("largeStraight", largeStraight.evalRoll)} />
               <RuleRow description={yahtzee.description} name="Kniffel" score={scores.yahtzee} doScore={evt => doScore("yahtzee", yahtzee.evalRoll)} />
               <RuleRow description={chance.description} name="Chance" score={scores.chance} doScore={evt => doScore("chance", chance.evalRoll)} />
-              <RuleRow name={`Summe Teil 2: ${bottomScore}`}></RuleRow>
+              <RuleRow description="total" name={`Summe Teil 2:`} score={bottomScore}></RuleRow>
             </tbody>
           </table>
         </section>
